@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Te amo Angeline</title>
+  <style>
+    :root{
+      --bg:#0f1724;
+      --accent:#ff477e;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color:white;
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      overflow:hidden;
+    }
+    .card{
+      padding:30px;
+      background:rgba(255,255,255,0.05);
+      border-radius:15px;
+      box-shadow:0 8px 20px rgba(0,0,0,0.5);
+      position:relative;
+    }
+    h1{margin-bottom:20px;font-size:36px}
+    .buttons{display:flex;gap:20px;justify-content:center}
+    button{
+      padding:15px 30px;
+      font-size:18px;
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+      transition:transform .2s ease;
+    }
+    .yes{background:var(--accent);color:white;font-weight:bold}
+    .no{background:#444;color:white}
+    .hearts{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+    }
+    .message{
+      margin-top:20px;
+      font-size:20px;
+      font-weight:bold;
+      color:#ffd6f6;
+      min-height:30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Te amo Angeline 💖</h1>
+    <div class="buttons">
+      <button class="yes" id="btnYes">¡Sí, así!</button>
+      <button class="no" id="btnNo">No</button>
+    </div>
+    <div class="message" id="message"></div>
+    <div class="hearts" id="hearts"></div>
+  </div>
+
+  <script>
+    const btnYes = document.getElementById('btnYes');
+    const btnNo = document.getElementById('btnNo');
+    const message = document.getElementById('message');
+    const hearts = document.getElementById('hearts');
+    let noSize = 1;
+
+    // Función para corazones
+    function spawnHeart(){
+      const el = document.createElement('div');
+      const size = 20 + Math.random()*30;
+      el.style.position='absolute';
+      el.style.left=(Math.random()*100)+'%';
+      el.style.bottom='0';
+      el.style.width=size+'px';
+      el.style.height=size+'px';
+      el.style.opacity=0.9;
+      el.innerHTML='<svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="'+randomColor()+'" d="M12 21s-7-4.35-9-7.35S1 7.5 6 5.5c2.2-1 4.8-.7 6 1 1.2-1.7 3.8-2 6-1 5 2 4 8.15 3 8.15S19 16.1 12 21z"/></svg>';
+      hearts.appendChild(el);
+      const rise = 300 + Math.random()*200;
+      el.animate([
+        { transform:`translateY(0px)`, opacity:1 },
+        { transform:`translateY(-${rise}px)`, opacity:0 }
+      ], { duration:2000, easing:'ease-out' });
+      setTimeout(()=>el.remove(),2000);
+    }
+
+    function randomColor(){
+      const colors=['#ff477e','#ff8ab8','#ffd166','#7afcff','#9b5cff'];
+      return colors[Math.floor(Math.random()*colors.length)];
+    }
+
+    // Evento Sí
+    btnYes.addEventListener('click',()=>{
+      message.textContent="¡Sabía que dirías que sí, Angeline! ❤️";
+      for(let i=0;i<20;i++){
+        setTimeout(()=>spawnHeart(),i*100);
+      }
+    });
+
+    // Evento No
+    btnNo.addEventListener('click',()=>{
+      noSize -= 0.15;
+      if(noSize <= 0){
+        btnNo.style.display='none';
+        message.textContent="Jijiji… el No desapareció, amorcito 😘";
+      } else {
+        btnNo.style.transform=`scale(${noSize})`;
+      }
+    });
+  </script>
+</body>
+
+</html>
