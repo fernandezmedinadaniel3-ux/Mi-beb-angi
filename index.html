@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿Quieres ser mi novia?</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #ffe6f0;
+    }
+    h1 {
+      color: #ff4d6d;
+      margin-top: 50px;
+    }
+    .btn {
+      font-size: 20px;
+      padding: 10px 20px;
+      margin: 20px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+    }
+    .yes {
+      background-color: #ff4d6d;
+      color: white;
+    }
+    .no {
+      background-color: #999;
+      color: white;
+    }
+    #message {
+      margin-top: 30px;
+      font-size: 24px;
+      color: #ff1a4d;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>¿Quieres ser mi novia, Angeline?</h1>
+  <button class="btn yes" onclick="sayYes()">Sí 💖</button>
+  <button class="btn no" id="noBtn" onclick="sayNo()">No 💔</button>
+  <div id="message"></div>
+
+  <script>
+    function sayYes() {
+      document.getElementById('message').innerHTML = 'Te amo Angeline ❤️❤️❤️';
+      for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+          const heart = document.createElement('div');
+          heart.innerHTML = '❤️';
+          heart.style.position = 'absolute';
+          heart.style.left = Math.random() * window.innerWidth + 'px';
+          heart.style.top = Math.random() * window.innerHeight + 'px';
+          heart.style.fontSize = '24px';
+          document.body.appendChild(heart);
+        }, i * 200);
+      }
+    }
+
+    function sayNo() {
+      let noBtn = document.getElementById('noBtn');
+      let size = parseFloat(window.getComputedStyle(noBtn).fontSize);
+      if (size > 5) {
+        noBtn.style.fontSize = (size - 2) + 'px';
+        noBtn.style.padding = (size - 2) + 'px';
+      } else {
+        noBtn.style.display = 'none';
+        document.getElementById('message').innerHTML = 'Ups... el NO desapareció amorcito 💕';
+      }
+    }
+  </script>
+</body>
+</html>
